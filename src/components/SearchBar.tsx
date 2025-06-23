@@ -8,15 +8,20 @@ type SearchBarProps = {
 function SearchBar({messages,setMessages}:SearchBarProps) {
     const[prompt, setPrompt] = useState('')
     function handleSend(){
-        if(!prompt.trim()) return
+        if(!prompt.trim()) alert("Prompt can't be empty")
         setPrompt('')
         setMessages([...messages,{
             content:prompt
         }])
     }
+    function handleKeyDown(event:React.KeyboardEvent<HTMLInputElement>){
+        if(event.key ==='Enter'){
+            handleSend()
+        }
+    }
   return (
     <div className='search-bar'>
-        <input className='search-input' type='text' placeholder='Please ask what you want...' value={prompt} onChange={(e)=>setPrompt(e.target.value)} />
+        <input className='search-input' type='text' placeholder='Please ask what you want...' value={prompt} onChange={(e)=>setPrompt(e.target.value)} onKeyDown={handleKeyDown} />
         <button className='send-btn' onClick={handleSend}>
             Send
         </button>
