@@ -2,7 +2,6 @@
     padding: 20px;
     max-width: 600px;
     margin: 0 auto;
-    border: 1px solid red;
 }
 
 .welcome-message {
@@ -33,13 +32,13 @@
 }
 
 .message-left {
-    align-self: flex-start;
+    justify-self: flex-start;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
 }
 
 .message-right {
-    align-self: flex-end;
+    justify-self: flex-end;
     background-color: orange;
     color: white;
     border: 1px solid orange;
@@ -77,4 +76,40 @@
 
 .send-btn:hover {
     background-color: darkorange;
+}
+.full-message{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.message-time{
+    font-size: 12px;
+    font-weight: 500;
+}
+.lang-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.lang-button {
+    padding: 4px 10px;
+    font-size: 0.9em;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.lang-button:hover {
+    background-color: #f0f0f0;
+    border-color: #999;
+}
+
+.lang-button.active {
+    background-color: orange;
+    color: white;
+    border-color: orange;
 }

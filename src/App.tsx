@@ -1,4 +1,4 @@
-
+import './i18n'; 
 import './App.css'
 import Chat from './components/Chat'
 

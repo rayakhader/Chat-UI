@@ -1,5 +1,6 @@
 import { useState, type Dispatch, type SetStateAction } from 'react'
 import type { Msg } from './Chat'
+import { useTranslation } from 'react-i18next'
 type SearchBarProps = {
     messages: Msg[],
     setMessages: Dispatch<SetStateAction<Msg[]>>
@@ -7,25 +8,33 @@ type SearchBarProps = {
 
 function SearchBar({ messages, setMessages }: SearchBarProps) {
     const [prompt, setPrompt] = useState('')
+    const {t} =useTranslation()
     function handleSend() {
-        if (!prompt.trim()) alert("Prompt can't be empty")
+        if (!prompt.trim()) alert(t("Prompt can't be empty"))
         else {
             setPrompt('')
             setMessages([...messages, {
-                content: prompt
+                content: prompt,
             }])
         }
     }
-    function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    function handleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
         if (event.key === 'Enter') {
             handleSend()
         }
     }
     return (
         <div className='search-bar'>
-            <input className='search-input' type='text' placeholder='Please ask what you want...' value={prompt} onChange={(e) => setPrompt(e.target.value)} onKeyDown={handleKeyDown} />
+             <textarea
+                className='search-input'
+                placeholder={t('Please ask what you want...')}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={handleKeyDown}
+                rows={2}
+            />
             <button className='send-btn' onClick={handleSend}>
-                Send
+                {t('Send')}
             </button>
         </div>
     )
