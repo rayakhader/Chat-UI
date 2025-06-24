@@ -1,4 +1,4 @@
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 import type { Msg } from './Chat'
 import { useTranslation } from 'react-i18next'
 type SearchBarProps = {
@@ -8,14 +8,29 @@ type SearchBarProps = {
 
 function SearchBar({ messages, setMessages }: SearchBarProps) {
     const [prompt, setPrompt] = useState('')
-    const {t} =useTranslation()
+    const [sent, setSent] = useState(false)
+    const { t } = useTranslation()
+    useEffect(() => {
+        if (sent) {
+            setTimeout(() => {
+                setMessages([...messages, {
+                    content: 'auto-replay',
+                    sender: 'system'
+                }])
+                setSent(false)
+            }, 1000)
+        }
+    }, [sent])
     function handleSend() {
         if (!prompt.trim()) alert(t("Prompt can't be empty"))
         else {
             setPrompt('')
+            setSent(true)
             setMessages([...messages, {
                 content: prompt,
+                sender: 'user'
             }])
+
         }
     }
     function handleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -24,16 +39,19 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
         }
     }
     return (
-        <div className='search-bar'>
-             <textarea
-                className='search-input'
+        <div className="flex items-center gap-2 mt-3">
+            <textarea
+                className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
                 placeholder={t('Please ask what you want...')}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 rows={2}
             />
-            <button className='send-btn' onClick={handleSend}>
+            <button
+                onClick={handleSend}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition"
+            >
                 {t('Send')}
             </button>
         </div>

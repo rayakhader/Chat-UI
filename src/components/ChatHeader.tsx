@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 
 function ChatHeader() {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   return (
     <div>
       <h2>{t('Chat with us!')}</h2>

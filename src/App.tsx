@@ -1,11 +1,9 @@
-import './i18n'; 
-import './App.css'
+import './i18n';
 import Chat from './components/Chat'
 
 function App() {
 
   return (
-   
     <Chat />
   )
 }
