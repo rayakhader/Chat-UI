@@ -1,6 +1,7 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 import type { Msg } from './Chat'
 import { useTranslation } from 'react-i18next'
+import { sendMessage } from '../api/endpoints/chat'
 type SearchBarProps = {
     messages: Msg[],
     setMessages: Dispatch<SetStateAction<Msg[]>>
@@ -21,7 +22,7 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
             }, 1000)
         }
     }, [sent])
-    function handleSend() {
+    async function handleSend() {
         if (!prompt.trim()) alert(t("Prompt can't be empty"))
         else {
             setPrompt('')
@@ -30,6 +31,12 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
                 content: prompt,
                 sender: 'user'
             }])
+            try {
+                const response = await sendMessage(prompt);
+                console.log('Server replied:', response);
+            } catch (err) {
+                console.error('Error sending', err);
+            }
 
         }
     }

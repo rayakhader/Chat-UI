@@ -13,6 +13,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.10",
     "@tailwindcss/vite": "^4.1.10",
+    "axios": "^1.10.0",
     "framer-motion": "^12.19.1",
     "i18next": "^25.2.1",
     "react": "^19.1.0",
