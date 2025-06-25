@@ -5,24 +5,24 @@ import ChatHeader from './ChatHeader'
 import { useTranslation } from 'react-i18next'
 export type Msg = {
   content: string,
-  sender: 'user' |'system',
+  sender: 'user' | 'system',
   sentAt: Date,
   reaction?: 'like' | 'dislike',
 }
 function Chat() {
-  const { t,i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [messages, setMessages] = useState<Msg[]>([{
-    content: t("Hi there! How can I help you today?"),
+    content: t("CHAT.WelcomeMessage"),
     sender: 'system',
     sentAt: new Date()
   }])
 
-  useEffect(()=>{
-   const lang = localStorage.getItem('lang');
-  if (lang) {
-    i18n.changeLanguage(lang); 
-  }
-  },[])
+  useEffect(() => {
+    const lang = localStorage.getItem('lang');
+    if (lang) {
+      i18n.changeLanguage(lang);
+    }
+  }, [])
 
   function handleAddReaction(index: number, reaction: 'like' | 'dislike') {
     setMessages(prev => {
@@ -31,9 +31,9 @@ function Chat() {
       return updated
     })
   }
-  async function handleChangeLanguage(lang: string){
+  async function handleChangeLanguage(lang: string) {
     await i18n.changeLanguage(lang)
-    localStorage.setItem('lang',lang);
+    localStorage.setItem('lang', lang);
   }
 
   return (

@@ -24,7 +24,7 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
         }
     }, [sent])
     async function handleSend() {
-        if (!prompt.trim()) alert(t("Prompt can't be empty"))
+        if (!prompt.trim()) alert(t("CHAT.WarnMessage"))
         else {
             setPrompt('')
             setSent(true)
@@ -52,7 +52,7 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
         <div className="flex items-center gap-2 mt-3">
             <textarea
                 className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition resize-none max-h-32 overflow-y-auto"
-                placeholder={t('Please ask what you want...')}
+                placeholder={t('CHAT.Placeholder')}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -62,7 +62,7 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
                 onClick={handleSend}
                 className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition"
             >
-                {t('Send')}
+                {t('CHAT.Send')}
             </button>
         </div>
     )

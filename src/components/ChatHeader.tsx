@@ -4,7 +4,7 @@ function ChatHeader() {
   const { t } = useTranslation()
   return (
     <div>
-      <h2>{t('Chat with us!')}</h2>
+      <h2>{t('CHAT.ChatWithUs')}</h2>
     </div>
   )
 }
