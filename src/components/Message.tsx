@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { formatDate } from '../utils/helper';
 import type { Msg } from './Chat'
 import { motion } from 'framer-motion'
 
@@ -11,11 +11,8 @@ type MessageProps = {
 function Message({ message, index, onReact }: MessageProps) {
   const alignment = message.sender === 'user' ? 'message-left' : 'message-right';
   const isAnswer = message.sender === 'system';
-  const { t } = useTranslation();
-  const dateTime = new Date();
-  const hours = dateTime.getHours().toString().padStart(2, '0');
-  const minutes = dateTime.getMinutes().toString().padStart(2, '0');
-  const time = `${hours}:${minutes}`;
+  const time = formatDate(message.sentAt);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -25,10 +22,10 @@ function Message({ message, index, onReact }: MessageProps) {
     >
       <div className={`flex items-center gap-1 ${alignment === 'message-left' ? 'justify-end' : ''}`}>
         <div className={`max-w-[70%] rounded-2xl px-4 py-2 break-words shadow-sm ${alignment === 'message-left'
-            ? 'bg-gray-100 text-gray-800 border border-gray-200'
-            : 'bg-orange-500 text-white border border-orange-500'
+          ? 'bg-gray-100 text-gray-800 border border-gray-200'
+          : 'bg-orange-500 text-white border border-orange-500'
           }`}>
-          {message.isTranslated ? t(message.content) : message.content}
+          {message.content}
         </div>
         {message.reaction && (
           <span className="ml-2">{message.reaction === 'like' ? '👍' : '👎'}</span>

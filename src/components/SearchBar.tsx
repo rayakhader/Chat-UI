@@ -16,7 +16,8 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
             setTimeout(() => {
                 setMessages([...messages, {
                     content: 'auto-replay',
-                    sender: 'system'
+                    sender: 'system',
+                    sentAt: new Date()
                 }])
                 setSent(false)
             }, 1000)
@@ -29,7 +30,8 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
             setSent(true)
             setMessages([...messages, {
                 content: prompt,
-                sender: 'user'
+                sender: 'user',
+                sentAt: new Date()
             }])
             try {
                 const response = await sendMessage(prompt);
@@ -42,13 +44,14 @@ function SearchBar({ messages, setMessages }: SearchBarProps) {
     }
     function handleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
         if (event.key === 'Enter') {
+            event.preventDefault();
             handleSend()
         }
     }
     return (
         <div className="flex items-center gap-2 mt-3">
             <textarea
-                className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
+                className="flex-1 p-3 border border-gray-300 rounded-lg shadow-sm outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition resize-none max-h-32 overflow-y-auto"
                 placeholder={t('Please ask what you want...')}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}

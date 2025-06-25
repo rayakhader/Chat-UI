@@ -1,21 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MessagesList from './MessagesList'
 import SearchBar from './SearchBar'
 import ChatHeader from './ChatHeader'
 import { useTranslation } from 'react-i18next'
 export type Msg = {
   content: string,
-  sender: string,
-  isTranslated?: boolean,
-  reaction?: 'like' | 'dislike'
+  sender: 'user' |'system',
+  sentAt: Date,
+  reaction?: 'like' | 'dislike',
 }
 function Chat() {
-  const { i18n } = useTranslation()
+  const { t,i18n } = useTranslation()
   const [messages, setMessages] = useState<Msg[]>([{
-    content: "Hi there! How can I help you today?",
+    content: t("Hi there! How can I help you today?"),
     sender: 'system',
-    isTranslated: true
+    sentAt: new Date()
   }])
+
+  useEffect(()=>{
+   const lang = localStorage.getItem('lang');
+  if (lang) {
+    i18n.changeLanguage(lang); 
+  }
+  },[])
 
   function handleAddReaction(index: number, reaction: 'like' | 'dislike') {
     setMessages(prev => {
@@ -23,7 +30,10 @@ function Chat() {
       updated[index] = { ...updated[index], reaction }
       return updated
     })
-
+  }
+  async function handleChangeLanguage(lang: string){
+    await i18n.changeLanguage(lang)
+    localStorage.setItem('lang',lang);
   }
 
   return (
@@ -38,7 +48,7 @@ function Chat() {
                 ? 'bg-orange-500 text-white border-orange-500'
                 : 'bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100'
                 }`}
-              onClick={() => i18n.changeLanguage(lang)}
+              onClick={() => handleChangeLanguage(lang)}
             >
               {lang.toUpperCase()}
             </button>
